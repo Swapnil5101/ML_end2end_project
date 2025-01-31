@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # A
 from logger import logging
 from exception import CustomException
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer, ModelTrainerConfig
 
 import pandas as pd
 from dataclasses import dataclass
@@ -54,4 +55,9 @@ if __name__ == "__main__":
     obj = DataIngestion()
     train_data_path, test_data_path = obj.initiate_data_ingestion()
     data_transformation_obj = DataTransformation()
-    data_transformation_obj.initiate_data_transformation(train_data_path, test_data_path)
+    train_arr, test_arr, _ = data_transformation_obj.initiate_data_transformation(train_data_path, test_data_path)
+    
+    model_trainer = ModelTrainer()
+    best_model_pred, best_r2_score = model_trainer.initiate_model_trainer(train_arr, test_arr)
+    # print(f"Best model's prediction: {best_model_pred}\n")
+    print('\033[1m' + f"Best model's r2 score: {best_r2_score}")

@@ -84,6 +84,8 @@ class DataTransformation:
             logging.info("Saving preprocessor object...")
             save_obj(file_path=self.data_transformation_config.preprocessor_obj_file_path, 
                         obj=preprocessing_obj)
+            
+            return (train_arr, test_arr, self.data_transformation_config.preprocessor_obj_file_path)
         
         except Exception as e:
             raise CustomException(e, sys)
