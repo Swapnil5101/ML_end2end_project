@@ -1,11 +1,16 @@
 import os
 import sys
 from pathlib import Path
-sys.path.append(str(Path(__file__).parent.parent))
+# sys.path.append(str(Path(__file__).parent.parent))
+     ## OR ##
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # And Run this way: python -m src.components.data_ingestion (to avoid ModuleNotFoundError)
+
+
 from logger import logging
 from exception import CustomException
-import pandas as pd
+from src.components.data_transformation import DataTransformation
 
+import pandas as pd
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 
@@ -47,4 +52,6 @@ class DataIngestion:
         
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data_path, test_data_path = obj.initiate_data_ingestion()
+    data_transformation_obj = DataTransformation()
+    data_transformation_obj.initiate_data_transformation(train_data_path, test_data_path)
